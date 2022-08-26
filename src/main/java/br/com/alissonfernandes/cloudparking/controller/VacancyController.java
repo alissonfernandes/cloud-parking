@@ -1,7 +1,7 @@
 package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
-import br.com.alissonfernandes.cloudparking.service.VacancyService;
+import br.com.alissonfernandes.cloudparking.service.IVacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +13,18 @@ import java.util.List;
 public class VacancyController {
 
     @Autowired
-    private VacancyService vacancyService;
+    private IVacancyService vacancyService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VacancyDTO createVacancy(VacancyDTO vacancyDTO) {
+    public VacancyDTO createVacancy(@RequestBody VacancyDTO vacancyDTO) {
         return vacancyService.create(vacancyDTO);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public VacancyDTO getVacancy(@PathVariable Long id, VacancyDTO vacancyDTO) {
-        return vacancyService.get(id, vacancyDTO);
+    public VacancyDTO getVacancy(@PathVariable Long id) {
+        return vacancyService.get(id);
     }
 
     @GetMapping
@@ -41,7 +41,7 @@ public class VacancyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVacancy(Long id) {
+    public void deleteVacancy(@PathVariable Long id) {
         vacancyService.delete(id);
     }
 }
