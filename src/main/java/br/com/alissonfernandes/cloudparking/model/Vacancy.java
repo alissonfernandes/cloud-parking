@@ -21,7 +21,7 @@ public class Vacancy {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusVacancy statusVacancy;
+    private StatusVacancy status;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
