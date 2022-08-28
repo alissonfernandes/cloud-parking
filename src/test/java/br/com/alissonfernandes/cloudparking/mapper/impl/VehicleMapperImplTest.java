@@ -4,14 +4,17 @@ import br.com.alissonfernandes.cloudparking.builder.VehicleDTOBuilder;
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
 import br.com.alissonfernandes.cloudparking.mapper.VehicleMapper;
 import br.com.alissonfernandes.cloudparking.model.Vehicle;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("testando implementação do VahicleMapper")
 public class VehicleMapperImplTest {
 
     VehicleMapper vehicleMapper = new VehicleMapperImpl();
 
     @Test
+    @DisplayName("retorne VehicleModel quando o método toModel for chamado")
     public void whenToModelIsCalledThenVehicleModelIsReturned() {
         VehicleDTO vehicleDTO = VehicleDTOBuilder.builder().build().toVehicleDTO();
         Vehicle vehicleModel = vehicleMapper.toModel(vehicleDTO);
@@ -27,7 +30,8 @@ public class VehicleMapperImplTest {
     }
 
     @Test
-    public void wneTODTOIsCalledThenVehicleDTOIsReturned() {
+    @DisplayName("retorne VehicleDTO quando o método toDTO for chamado")
+    public void whenTODTOIsCalledThenVehicleDTOIsReturned() {
         VehicleDTO vehicleDTOToMapper = VehicleDTOBuilder.builder().build().toVehicleDTO();
         Vehicle vehicleModel = vehicleMapper.toModel(vehicleDTOToMapper);
 
