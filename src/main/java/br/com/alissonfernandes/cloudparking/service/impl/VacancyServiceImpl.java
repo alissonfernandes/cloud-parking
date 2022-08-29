@@ -2,6 +2,7 @@ package br.com.alissonfernandes.cloudparking.service.impl;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
+import br.com.alissonfernandes.cloudparking.mapper.impl.VacancyMapperImpl;
 import br.com.alissonfernandes.cloudparking.model.Vacancy;
 import br.com.alissonfernandes.cloudparking.repository.VacancyRepository;
 import br.com.alissonfernandes.cloudparking.service.IVacancyService;
@@ -20,6 +21,10 @@ public class VacancyServiceImpl implements IVacancyService {
     private VacancyRepository vacancyRepository;
 
     private VacancyMapper vacancyMapper;
+
+    public VacancyServiceImpl() {
+        vacancyMapper = new VacancyMapperImpl();
+    }
 
     @Override
     public VacancyDTO create(VacancyDTO vacancyDTO) {
