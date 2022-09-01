@@ -23,6 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.not;
@@ -87,7 +88,22 @@ public class VacancyControllerTest {
                 .andExpect(jsonPath("$.id", is(not(empty()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
+    }
 
+    @Test
+    @DisplayName("quando o método HTTP PUT é chamado então um vacancy é atualizado e retornado")
+    void whenPUTIsCalledThenAVacancyIsUpdated() throws Exception {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyService.update(vacancyDTO.getId(), vacancyDTO)).thenReturn(vacancyDTO);
+
+        mockMvc.perform(put(VACANCY_API_URL_PATH + "/" + VALID_VACANCY_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vacancyDTO)))
+                .andExpect(status().isUpgradeRequired())
+                .andExpect(jsonPath("$.id", is(not(empty()))))
+                .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
+                .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
 
 
