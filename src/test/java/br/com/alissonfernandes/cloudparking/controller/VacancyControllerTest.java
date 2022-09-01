@@ -73,5 +73,22 @@ public class VacancyControllerTest {
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
 
+    @Test
+    @DisplayName("quando GET é chamado então um vacancy é retornado")
+    void whenGETIsCalledThenAVacancyIsReturned() throws Exception {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyService.get(vacancyDTO.getId())).thenReturn(vacancyDTO);
+
+        mockMvc.perform(get(VACANCY_API_URL_PATH + "/" + VALID_VACANCY_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vacancyDTO)))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.id", is(not(empty()))))
+                .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
+                .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
+
+    }
+
 
 }
