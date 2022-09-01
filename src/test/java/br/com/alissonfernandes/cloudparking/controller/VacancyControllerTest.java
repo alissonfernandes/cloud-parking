@@ -10,16 +10,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doNothing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.doThrow;
+
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -104,6 +104,16 @@ public class VacancyControllerTest {
                 .andExpect(jsonPath("$.id", is(not(empty()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
+    }
+
+    @Test
+    @DisplayName("quando HTTP DELETE for chamado com um id válido então status NoContent é retornado")
+    void whenDELETEIsCalledWithValidIdThenANoContentStatusIsReturned() throws Exception {
+        doNothing().when(vacancyService).delete(VALID_VACANCY_ID);
+
+        mockMvc.perform(delete(VACANCY_API_URL_PATH + "/" + VALID_VACANCY_ID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
 
