@@ -31,8 +31,11 @@ import static org.hamcrest.Matchers.empty;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import java.util.Collections;
+
 @SpringBootTest
 @AutoConfigureMockMvc
+@DisplayName("testando métodos HTTP do Vacancy Controller")
 public class VacancyControllerTest {
 
     @Autowired
@@ -88,6 +91,21 @@ public class VacancyControllerTest {
                 .andExpect(jsonPath("$.id", is(not(empty()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
+    }
+
+    @Test
+    @DisplayName("quando HTTP GET (sem parâmetro) for chamado então retorne uma lista de vacancys")
+    void whenGETListWithVacanysIsCalledThenReturnAListAllVacancys() throws Exception {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyService.listAll()).thenReturn(Collections.singletonList(vacancyDTO));
+
+        mockMvc.perform(get(VACANCY_API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(not(empty()))))
+                .andExpect(jsonPath("$[0].status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
+                .andExpect(jsonPath("$[0].vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
 
     @Test
