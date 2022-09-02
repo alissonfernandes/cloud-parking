@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import br.com.alissonfernandes.cloudparking.builder.VacancyDTOBuilder;
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
 import br.com.alissonfernandes.cloudparking.mapper.impl.VacancyMapperImpl;
 import br.com.alissonfernandes.cloudparking.model.Vacancy;
@@ -57,7 +58,7 @@ public class VacancyServiceImplTest {
 
     @Test
     @DisplayName("quando o id valido de um vacancy for informado então retorne um vacancy")
-    void whenValidVacancyIdIsGivenThenReturnAVacancy() {
+    void whenValidVacancyIdIsGivenThenReturnAVacancy() throws VacancyNotFoundException {
         VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
         Vacancy vacancyModel = vacancyMapper.toModel(vacancyDTO);
 

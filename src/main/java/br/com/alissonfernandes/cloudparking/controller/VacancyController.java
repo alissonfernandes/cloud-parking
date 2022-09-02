@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.service.IVacancyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class VacancyController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public VacancyDTO getVacancy(@PathVariable Long id) {
+    public VacancyDTO getVacancy(@PathVariable Long id) throws VacancyNotFoundException {
         return vacancyService.get(id);
     }
 
@@ -36,13 +37,13 @@ public class VacancyController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
-    public VacancyDTO updateVacancy(@PathVariable Long id, @RequestBody VacancyDTO vacancyDTO) {
+    public VacancyDTO updateVacancy(@PathVariable Long id, @RequestBody VacancyDTO vacancyDTO) throws VacancyNotFoundException {
         return vacancyService.update(id, vacancyDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVacancy(@PathVariable Long id) {
+    public void deleteVacancy(@PathVariable Long id) throws VacancyNotFoundException {
         vacancyService.delete(id);
     }
 }

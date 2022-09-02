@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.service.impl;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
 import br.com.alissonfernandes.cloudparking.mapper.impl.VacancyMapperImpl;
 import br.com.alissonfernandes.cloudparking.model.Vacancy;
@@ -34,8 +35,8 @@ public class VacancyServiceImpl implements IVacancyService {
     }
 
     @Override
-    public VacancyDTO get(Long id) {
-        Vacancy vacancy = vacancyRepository.findById(id).get();
+    public VacancyDTO get(Long id) throws VacancyNotFoundException {
+        Vacancy vacancy = this.verifyIfExists(id);
         return vacancyMapper.toDTO(vacancy);
     }
 
@@ -48,14 +49,23 @@ public class VacancyServiceImpl implements IVacancyService {
     }
 
     @Override
-    public VacancyDTO update(Long id, VacancyDTO vacancyDTO) {
+    public VacancyDTO update(Long id, VacancyDTO vacancyDTO) throws VacancyNotFoundException {
+        this.verifyIfExists(id);
         Vacancy vacancyToSave = vacancyMapper.toModel(vacancyDTO);
         Vacancy vacancyReturned = vacancyRepository.save(vacancyToSave);
         return vacancyMapper.toDTO(vacancyReturned);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws VacancyNotFoundException {
+        this.verifyIfExists(id);
         vacancyRepository.deleteById(id);
     }
+
+    private Vacancy verifyIfExists(Long id) throws VacancyNotFoundException {
+        Vacancy vacancy = vacancyRepository.findById(id)
+                .orElseThrow(() -> new VacancyNotFoundException(id));
+        return vacancy;
+    }
+
 }
