@@ -75,6 +75,7 @@ public class VacancyControllerTest {
                 .content(objectMapper.writeValueAsString(vacancyDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(not(empty()))))
+                .andExpect(jsonPath("$.number", is(Math.toIntExact(vacancyDTO.getNumber()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
@@ -91,6 +92,7 @@ public class VacancyControllerTest {
                 .content(objectMapper.writeValueAsString(vacancyDTO)))
                 .andExpect(status().isFound())
                 .andExpect(jsonPath("$.id", is(not(empty()))))
+                .andExpect(jsonPath("$.number", is(Math.toIntExact(vacancyDTO.getNumber()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
@@ -118,6 +120,7 @@ public class VacancyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", is(not(empty()))))
+                .andExpect(jsonPath("$[0].number", is(Math.toIntExact(vacancyDTO.getNumber()))))
                 .andExpect(jsonPath("$[0].status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$[0].vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }
@@ -134,6 +137,7 @@ public class VacancyControllerTest {
                 .content(objectMapper.writeValueAsString(vacancyDTO)))
                 .andExpect(status().isUpgradeRequired())
                 .andExpect(jsonPath("$.id", is(not(empty()))))
+                .andExpect(jsonPath("$.number", is(Math.toIntExact(vacancyDTO.getNumber()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
     }

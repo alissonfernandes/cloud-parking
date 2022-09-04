@@ -13,6 +13,9 @@ public class VacancyDTOBuilder {
     private Long id = 1L;
 
     @Builder.Default
+    private Long number = 1L;
+
+    @Builder.Default
     private StatusVacancy status = StatusVacancy.AVAILABLE;
 
     @Builder.Default
@@ -21,6 +24,6 @@ public class VacancyDTOBuilder {
     private VehicleDTO vehicle;
 
     public VacancyDTO toVacancyDTO() {
-        return new VacancyDTO(id, status, vehicleType, vehicle);
+        return new VacancyDTO(id, number,status, vehicleType, vehicle);
     }
 }
