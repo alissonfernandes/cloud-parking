@@ -2,6 +2,7 @@ package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.builder.VacancyDTOBuilder;
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.service.IVacancyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,6 +61,7 @@ public class VacancyControllerTest {
 
     private static final String VACANCY_API_URL_PATH = "/api/v1/vacancy";
     private static final long VALID_VACANCY_ID = 1L;
+    private static final long INVALID_VACANCY_ID = 2L;
 
     @Test
     @DisplayName("quando POST é chamado então um vacancy é criado")
@@ -91,6 +93,18 @@ public class VacancyControllerTest {
                 .andExpect(jsonPath("$.id", is(not(empty()))))
                 .andExpect(jsonPath("$.status", is(vacancyDTO.getStatus().getStatus().toUpperCase())))
                 .andExpect(jsonPath("$.vehicleType", is(vacancyDTO.getVehicleType().getType().toUpperCase())));
+    }
+
+    @Test
+    @DisplayName("quando HTTP GET (com parâmetro inválido) for chamado, então NotFound status é retornado")
+    void whenGETIsCalledWithInvalidIdThenNotFoundStatusIsReturned() throws Exception {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyService.get(vacancyDTO.getId())).thenThrow(VacancyNotFoundException.class);
+
+        mockMvc.perform(get(VACANCY_API_URL_PATH + "/" + vacancyDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -132,6 +146,16 @@ public class VacancyControllerTest {
         mockMvc.perform(delete(VACANCY_API_URL_PATH + "/" + VALID_VACANCY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("quando HTTP DELETE for chamado passando um ID Inválido, então status NotFound é retornado")
+    void whenDELETEIsCalledWithInvalidIdThenNotFoundStatusIsReturned() throws Exception {
+        doThrow(VacancyNotFoundException.class).when(vacancyService).delete(INVALID_VACANCY_ID);
+
+        mockMvc.perform(delete(VACANCY_API_URL_PATH + "/" + INVALID_VACANCY_ID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
 
