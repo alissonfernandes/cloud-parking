@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
+import br.com.alissonfernandes.cloudparking.exception.VehicleNotFoundException;
 import br.com.alissonfernandes.cloudparking.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public VehicleDTO get(Long id) {
+    public VehicleDTO get(Long id) throws VehicleNotFoundException {
         return vehicleService.get(id);
     }
 
@@ -35,13 +36,13 @@ public class VehicleController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
-    public VehicleDTO updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) {
+    public VehicleDTO updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) throws VehicleNotFoundException {
         return vehicleService.update(id, vehicleDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVehicle(@PathVariable Long id) {
+    public void deleteVehicle(@PathVariable Long id) throws VehicleNotFoundException {
         vehicleService.delete(id);
     }
 }
