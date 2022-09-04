@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class VacancyDTO {
 
     private Long id;
+    private Long number;
     private StatusVacancy status;
     private VehicleType vehicleType;
     private VehicleDTO vehicle;

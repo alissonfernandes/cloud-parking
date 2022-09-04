@@ -15,6 +15,7 @@ public class VacancyMapperImpl implements VacancyMapper {
 
         Vacancy vacancy = new Vacancy();
         vacancy.setId(vacancyDTO.getId());
+        vacancy.setNumber(vacancyDTO.getNumber());
         vacancy.setStatus(vacancyDTO.getStatus());
         vacancy.setVehicleType(vacancyDTO.getVehicleType());
         vacancy.setVehicle(vehicleMapper.toModel(vacancyDTO.getVehicle()));
@@ -27,6 +28,7 @@ public class VacancyMapperImpl implements VacancyMapper {
 
         VacancyDTO vacancyDTO = new VacancyDTO();
         vacancyDTO.setId(vacancy.getId());
+        vacancyDTO.setNumber(vacancy.getNumber());
         vacancyDTO.setStatus(vacancy.getStatus());
         vacancyDTO.setVehicleType(vacancy.getVehicleType());
         vacancyDTO.setVehicle(vehicleMapper.toDTO(vacancy.getVehicle()));
