@@ -69,6 +69,16 @@ public class VacancyServiceImplTest {
     }
 
     @Test
+    @DisplayName("quando id de um vacancy for informado e este não possuir registro, então lance uma exceção")
+    void whenNotRegisteredVacancyIdIsGivenThenThrowAnException() {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyRepository.findById(vacancyDTO.getId())).thenReturn(Optional.empty());
+
+        assertThrows(VacancyNotFoundException.class, () -> vacancyService.get(vacancyDTO.getId()));
+    }
+
+    @Test
     @DisplayName("quando lista vacancy for chamado então retorne uma lista de vacancys")
     void whenListVacancyIsCalledThenReturnAListOfVacancys() {
         VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
@@ -88,6 +98,16 @@ public class VacancyServiceImplTest {
 
         List<VacancyDTO> vacancys = vacancyService.listAll();
         assertThat(vacancys, is(empty()));
+    }
+
+    @Test
+    @DisplayName("quando uma exclusão for chamada passando um ID inválido ou não existente, então lance uma exceção")
+    void whenExclusionIsCalledWithInvalidIdThenAnExclusion() {
+        VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
+
+        when(vacancyRepository.findById(vacancyDTO.getId())).thenReturn(Optional.empty());
+
+        assertThrows(VacancyNotFoundException.class, () -> vacancyService.delete(vacancyDTO.getId()));
     }
 
 }
