@@ -24,7 +24,7 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public VehicleDTO get(Long id) throws VehicleNotFoundException {
+    public VehicleDTO get(@PathVariable Long id) throws VehicleNotFoundException {
         return vehicleService.get(id);
     }
 
