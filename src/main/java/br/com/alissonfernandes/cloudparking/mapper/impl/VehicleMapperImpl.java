@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.mapper.impl;
 
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
+import br.com.alissonfernandes.cloudparking.enums.VehicleAction;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
 import br.com.alissonfernandes.cloudparking.mapper.VehicleMapper;
 import br.com.alissonfernandes.cloudparking.model.Vehicle;
@@ -34,6 +35,9 @@ public class VehicleMapperImpl implements VehicleMapper {
         if (vehicle == null) return null;
 
         VehicleDTO vehicleDTO = new VehicleDTO();
+
+        if (vehicle.getEntryDate() == null) vehicleDTO.setVehicleAction(VehicleAction.ENTRY);
+        else vehicleDTO.setVehicleAction(VehicleAction.EXIT);
 
         vehicleDTO.setId(vehicle.getId());
         vehicleDTO.setVehicleType(vehicle.getVehicleType());
