@@ -2,7 +2,7 @@ package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
 import br.com.alissonfernandes.cloudparking.exception.VehicleNotFoundException;
-import br.com.alissonfernandes.cloudparking.service.IVehicleService;
+import br.com.alissonfernandes.cloudparking.service.impl.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ import java.util.List;
 public class VehicleController {
 
     @Autowired
-    private IVehicleService vehicleService;
+    private VehicleService vehicleService;
 
-    @PostMapping
+    @PostMapping("/entry")
     @ResponseStatus(HttpStatus.CREATED)
     public VehicleDTO createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.create(vehicleDTO);
+        return vehicleService.entry(vehicleDTO);
     }
 
     @GetMapping("/{id}")
@@ -32,6 +32,11 @@ public class VehicleController {
     @ResponseStatus(HttpStatus.OK)
     public List<VehicleDTO> getListAll() {
         return vehicleService.listAll();
+    }
+
+    @PutMapping("/{id}/exit")
+    public VehicleDTO exitvehicle(@PathVariable Long id) throws VehicleNotFoundException {
+        return vehicleService.exit(id);
     }
 
     @PutMapping("/{id}")
