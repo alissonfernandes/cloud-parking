@@ -2,7 +2,6 @@ package br.com.alissonfernandes.cloudparking.builder;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
-import br.com.alissonfernandes.cloudparking.enums.VehicleAction;
 import br.com.alissonfernandes.cloudparking.enums.VehicleType;
 import lombok.Builder;
 
@@ -24,9 +23,6 @@ public class VehicleDTOBuilder {
     private String color = "black";
 
     @Builder.Default
-    private VehicleAction vehicleAction = VehicleAction.ENTRY;
-
-    @Builder.Default
     private LocalDateTime entryDate = LocalDateTime.now();
 
     @Builder.Default
@@ -42,6 +38,6 @@ public class VehicleDTOBuilder {
     private VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
 
     public VehicleDTO toVehicleDTO() {
-        return new VehicleDTO(id, vehicleType, placa, color, vehicleAction, entryDate, exitDate, bill, driveName,vacancyDTO);
+        return new VehicleDTO(id, vehicleType, placa, color, entryDate, exitDate, bill, driveName,vacancyDTO);
     }
 }
