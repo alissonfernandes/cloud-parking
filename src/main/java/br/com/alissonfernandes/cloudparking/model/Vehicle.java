@@ -2,6 +2,7 @@ package br.com.alissonfernandes.cloudparking.model;
 
 import br.com.alissonfernandes.cloudparking.enums.VehicleType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Vehicle {
 
     @Id
