@@ -30,17 +30,6 @@ public class Vehicle {
     private String color;
 
     @Column(nullable = false)
-    private LocalDateTime entryDate;
-
-    @Column(nullable = true)
-    private LocalDateTime exitDate;
-
-    @Column(nullable = true)
-    private Double bill;
-
-    @Column(nullable = false)
     private String driveName;
 
-    @OneToOne(mappedBy = "vehicle", fetch = FetchType.LAZY)
-    private Vacancy vacancy;
 }

@@ -29,7 +29,4 @@ public class Vacancy {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Vehicle vehicle;
 }
