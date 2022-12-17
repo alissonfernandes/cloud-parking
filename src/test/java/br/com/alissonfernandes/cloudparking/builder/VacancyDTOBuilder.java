@@ -16,7 +16,7 @@ public class VacancyDTOBuilder {
     private Long number = 1L;
 
     @Builder.Default
-    private StatusVacancy status = StatusVacancy.AVAILABLE;
+    private StatusVacancy status = StatusVacancy.ONOCCUPIED;
 
     @Builder.Default
     private VehicleType vehicleType = VehicleType.CAR;
