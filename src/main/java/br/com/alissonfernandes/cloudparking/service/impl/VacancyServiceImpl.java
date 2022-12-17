@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.service.impl;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.enums.VehicleType;
 import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
 import br.com.alissonfernandes.cloudparking.mapper.impl.VacancyMapperImpl;
@@ -46,6 +47,15 @@ public class VacancyServiceImpl implements IVacancyService {
         return vacancyList.stream()
                 .map(v -> vacancyMapper.toDTO(v))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VacancyDTO> listAllVacancyOnoccupied(VehicleType vehicleType){
+        List<Vacancy> vacancyList = null;
+        if (vehicleType == null) vacancyList = vacancyRepository.findAllVacancyOnoccupied();
+        else if (vehicleType == VehicleType.CAR) vacancyList = vacancyRepository.findAllVacancyCarOnoccupied();
+        else if (vehicleType == VehicleType.MOTORCYCLE) vacancyList = vacancyRepository.findAllVacancyMotorcycleOnoccupied();
+        return vacancyList.stream().map(v -> vacancyMapper.toDTO(v)).collect(Collectors.toList());
     }
 
     @Override

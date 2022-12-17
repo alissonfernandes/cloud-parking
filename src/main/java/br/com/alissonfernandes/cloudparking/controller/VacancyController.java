@@ -1,6 +1,7 @@
 package br.com.alissonfernandes.cloudparking.controller;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
+import br.com.alissonfernandes.cloudparking.enums.VehicleType;
 import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
 import br.com.alissonfernandes.cloudparking.service.IVacancyService;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,24 @@ public class VacancyController {
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyDTO> getListAll() {
         return vacancyService.listAll();
+    }
+
+    @GetMapping("/all/unoccupied")
+    @ResponseStatus(HttpStatus.OK)
+    public  List<VacancyDTO> getAllVacancyCarOnoccpied() {
+        return vacancyService.listAllVacancyOnoccupied(null);
+    }
+
+    @GetMapping("/all/unoccupied/car")
+    @ResponseStatus(HttpStatus.OK)
+    public List<VacancyDTO> getAllVacancyCarOnoccupied() {
+        return vacancyService.listAllVacancyOnoccupied(VehicleType.CAR);
+    }
+
+    @GetMapping("/all/unoccupied/motorcycle")
+    @ResponseStatus(HttpStatus.OK)
+    public List<VacancyDTO> getAllVacancyMotorcycleOnoccupied() {
+        return vacancyService.listAllVacancyOnoccupied(VehicleType.MOTORCYCLE);
     }
 
     @PutMapping("/{id}")
