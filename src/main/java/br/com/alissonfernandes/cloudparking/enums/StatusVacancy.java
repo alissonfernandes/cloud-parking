@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum StatusVacancy {
 
     OCCUPIED("Occupied"),
-    ONOCCUPIED("Onoccupied");
+    UNOCCUPIED("Unoccupied");
 
     private final String status;
 }
