@@ -13,7 +13,7 @@ public interface IVacancyService {
     VacancyDTO get(Long id) throws VacancyNotFoundException;
     List<VacancyDTO> listAll();
 
-    List<VacancyDTO> listAllVacancyOnoccupied(VehicleType vehicleType);
+    List<VacancyDTO> listAllVacancyUnoccupied(VehicleType vehicleType);
 
     VacancyDTO update(Long id, VacancyDTO vacancyDTO) throws VacancyNotFoundException;
     void delete(Long id) throws VacancyNotFoundException;

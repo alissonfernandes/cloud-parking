@@ -11,11 +11,11 @@ import java.util.List;
 public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
 
     @Query(value = "SELECT V FROM Vacancy as V WHERE V.status='UNOCCUPIED'")
-    List<Vacancy> findAllVacancyOnoccupied();
+    List<Vacancy> findAllVacancyUnoccupied();
 
     @Query(value = "SELECT V FROM Vacancy as V WHERE V.status='UNOCCUPIED' AND V.vehicleType='CAR'")
-    List<Vacancy> findAllVacancyCarOnoccupied();
+    List<Vacancy> findAllVacancyCarUnoccupied();
 
     @Query(value = "SELECT V FROM Vacancy as V WHERE V.status='UNOCCUPIED' AND V.vehicleType='MOTORCYCLE'")
-    List<Vacancy> findAllVacancyMotorcycleOnoccupied();
+    List<Vacancy> findAllVacancyMotorcycleUnoccupied();
 }

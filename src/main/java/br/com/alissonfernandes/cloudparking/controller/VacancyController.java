@@ -39,19 +39,19 @@ public class VacancyController {
     @GetMapping("/all/unoccupied")
     @ResponseStatus(HttpStatus.OK)
     public  List<VacancyDTO> getAllVacancyCarOnoccpied() {
-        return vacancyService.listAllVacancyOnoccupied(null);
+        return vacancyService.listAllVacancyUnoccupied(null);
     }
 
     @GetMapping("/all/unoccupied/car")
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyDTO> getAllVacancyCarOnoccupied() {
-        return vacancyService.listAllVacancyOnoccupied(VehicleType.CAR);
+        return vacancyService.listAllVacancyUnoccupied(VehicleType.CAR);
     }
 
     @GetMapping("/all/unoccupied/motorcycle")
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyDTO> getAllVacancyMotorcycleOnoccupied() {
-        return vacancyService.listAllVacancyOnoccupied(VehicleType.MOTORCYCLE);
+        return vacancyService.listAllVacancyUnoccupied(VehicleType.MOTORCYCLE);
     }
 
     @PutMapping("/{id}")

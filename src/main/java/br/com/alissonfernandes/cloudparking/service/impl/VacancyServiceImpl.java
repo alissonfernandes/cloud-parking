@@ -50,11 +50,11 @@ public class VacancyServiceImpl implements IVacancyService {
     }
 
     @Override
-    public List<VacancyDTO> listAllVacancyOnoccupied(VehicleType vehicleType){
+    public List<VacancyDTO> listAllVacancyUnoccupied(VehicleType vehicleType){
         List<Vacancy> vacancyList = null;
-        if (vehicleType == null) vacancyList = vacancyRepository.findAllVacancyOnoccupied();
-        else if (vehicleType == VehicleType.CAR) vacancyList = vacancyRepository.findAllVacancyCarOnoccupied();
-        else if (vehicleType == VehicleType.MOTORCYCLE) vacancyList = vacancyRepository.findAllVacancyMotorcycleOnoccupied();
+        if (vehicleType == null) vacancyList = vacancyRepository.findAllVacancyUnoccupied();
+        else if (vehicleType == VehicleType.CAR) vacancyList = vacancyRepository.findAllVacancyCarUnoccupied();
+        else if (vehicleType == VehicleType.MOTORCYCLE) vacancyList = vacancyRepository.findAllVacancyMotorcycleUnoccupied();
         return vacancyList.stream().map(v -> vacancyMapper.toDTO(v)).collect(Collectors.toList());
     }
 
