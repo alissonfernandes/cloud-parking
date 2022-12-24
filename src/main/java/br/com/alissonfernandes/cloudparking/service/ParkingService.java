@@ -4,7 +4,9 @@ import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
 import br.com.alissonfernandes.cloudparking.dto.VehicleDTO;
 import br.com.alissonfernandes.cloudparking.enums.StatusVacancy;
 import br.com.alissonfernandes.cloudparking.enums.VehicleType;
+import br.com.alissonfernandes.cloudparking.exception.NoVacanciesException;
 import br.com.alissonfernandes.cloudparking.exception.VacancyNotFoundException;
+import br.com.alissonfernandes.cloudparking.exception.VacancyTypeException;
 import br.com.alissonfernandes.cloudparking.mapper.VehicleMapper;
 import br.com.alissonfernandes.cloudparking.model.Parking;
 import br.com.alissonfernandes.cloudparking.model.Vacancy;
@@ -41,23 +43,23 @@ public class ParkingService {
     @Value("${price}")
     Double price;
 
-    public Parking entry(VehicleDTO vehicleDTO) {
+    public Parking entry(VehicleDTO vehicleDTO) throws NoVacanciesException, VacancyTypeException {
         Vehicle vehicle = vehicleMapper.toModel(vehicleDTO);
 
         if (vehicleDTO.getVehicleType() == VehicleType.CAR) {
 
            List<Vacancy> vacancies = vacancyRepository.findAllVacancyCarUnoccupied();
-           if (vacancies.isEmpty()) System.out.println("no vacancies to car");
+           if (vacancies.isEmpty()) throw new NoVacanciesException("No vacancies to car");
            else return  this.addInVacancy(vacancies.get(0), vehicle);
 
         } else if (vehicleDTO.getVehicleType() == VehicleType.MOTORCYCLE) {
 
             List<Vacancy> vacancies = vacancyRepository.findAllVacancyMotorcycleUnoccupied();
-            if (vacancies.isEmpty()) System.out.println("no vacancies to motorcycle");
+            if (vacancies.isEmpty()) throw new NoVacanciesException("No vacancies to motorcycle");
             else return this.addInVacancy(vacancies.get(0), vehicle);
 
         }
-        throw new RuntimeException("VehicleType is diferent of CAR and MOTORCYCLE");
+        throw new VacancyTypeException(vehicleDTO.getVehicleType().getType());
     }
 
     public Parking exit(Long id) throws VacancyNotFoundException {
