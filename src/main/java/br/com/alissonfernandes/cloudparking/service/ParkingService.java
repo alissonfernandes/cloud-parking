@@ -14,8 +14,12 @@ import br.com.alissonfernandes.cloudparking.repository.VacancyRepository;
 import br.com.alissonfernandes.cloudparking.repository.VehicleRepository;
 import br.com.alissonfernandes.cloudparking.service.impl.VacancyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,6 +40,9 @@ public class ParkingService {
 
     @Autowired
     private VehicleMapper vehicleMapper;
+
+    @Value("${price}")
+    Double price;
 
     public Parking entry(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.toModel(vehicleDTO);
@@ -63,7 +70,7 @@ public class ParkingService {
     public Parking exit(Long id) throws VacancyNotFoundException {
         Parking parking = this.verifyIfExists(id);
         parking.setExitDate(LocalDateTime.now());
-        parking.setBill(this.calcBill(parking));
+        parking.setBill(this.calcBill(parking.getEntryDate(), parking.getExitDate()));
 
         VacancyDTO vacancyDTO = vacancyService.get(parking.getVacancy().getId());
         vacancyDTO.setStatus(StatusVacancy.UNOCCUPIED);
@@ -78,8 +85,10 @@ public class ParkingService {
         return  parking;
     }
 
-    private Double calcBill(Parking parking) {
-        // this method still needs to be implemented
-        return 20.50d;
+    private Double calcBill(LocalDateTime entry, LocalDateTime exit) {
+        Duration duration = Duration.between(entry, exit);
+        Long time = duration.toMinutes();
+        Double bill = Double.parseDouble((time.toString()))/60 * price;
+        return bill;
     }
 }
