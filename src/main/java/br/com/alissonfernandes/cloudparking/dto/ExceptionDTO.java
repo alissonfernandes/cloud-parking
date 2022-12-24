@@ -1,4 +1,4 @@
-package br.com.alissonfernandes.cloudparking.exception;
+package br.com.alissonfernandes.cloudparking.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
