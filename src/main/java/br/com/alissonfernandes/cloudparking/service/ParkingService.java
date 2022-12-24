@@ -15,11 +15,8 @@ import br.com.alissonfernandes.cloudparking.repository.VehicleRepository;
 import br.com.alissonfernandes.cloudparking.service.impl.VacancyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,24 +44,20 @@ public class ParkingService {
     public Parking entry(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleMapper.toModel(vehicleDTO);
 
-        Vacancy vacancy = null;
-
         if (vehicleDTO.getVehicleType() == VehicleType.CAR) {
+
            List<Vacancy> vacancies = vacancyRepository.findAllVacancyCarUnoccupied();
            if (vacancies.isEmpty()) System.out.println("no vacancies to car");
-           else vacancy = vacancies.get(0);
+           else return  this.addInVacancy(vacancies.get(0), vehicle);
+
         } else if (vehicleDTO.getVehicleType() == VehicleType.MOTORCYCLE) {
+
             List<Vacancy> vacancies = vacancyRepository.findAllVacancyMotorcycleUnoccupied();
             if (vacancies.isEmpty()) System.out.println("no vacancies to motorcycle");
-            else vacancy = vacancies.get(0);
+            else return this.addInVacancy(vacancies.get(0), vehicle);
+
         }
-
-        vacancy.setStatus(StatusVacancy.OCCUPIED);
-
-        Parking parking = Parking.builder().vehicle(vehicleRepository.save(vehicle))
-                        .entryDate(LocalDateTime.now())
-                .vacancy(vacancy).build();
-       return parkingRepository.save(parking);
+        throw new RuntimeException("VehicleType is diferent of CAR and MOTORCYCLE");
     }
 
     public Parking exit(Long id) throws VacancyNotFoundException {
@@ -76,6 +69,14 @@ public class ParkingService {
         vacancyDTO.setStatus(StatusVacancy.UNOCCUPIED);
         vacancyService.update(parking.getVacancy().getId(), vacancyDTO);
 
+        return parkingRepository.save(parking);
+    }
+
+    private Parking addInVacancy(Vacancy vacancy, Vehicle vehicle) {
+        vacancy.setStatus(StatusVacancy.OCCUPIED);
+        Parking parking = Parking.builder().vehicle(vehicleRepository.save(vehicle))
+                .entryDate(LocalDateTime.now())
+                .vacancy(vacancy).build();
         return parkingRepository.save(parking);
     }
 
