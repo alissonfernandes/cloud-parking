@@ -16,12 +16,6 @@ public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
 
-    @PostMapping("/entry")
-    @ResponseStatus(HttpStatus.CREATED)
-    public VehicleDTO createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.entry(vehicleDTO);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public VehicleDTO get(@PathVariable Long id) throws VehicleNotFoundException {
@@ -32,11 +26,6 @@ public class VehicleController {
     @ResponseStatus(HttpStatus.OK)
     public List<VehicleDTO> getListAll() {
         return vehicleService.listAll();
-    }
-
-    @PutMapping("/{id}/exit")
-    public VehicleDTO exitvehicle(@PathVariable Long id) throws VehicleNotFoundException {
-        return vehicleService.exit(id);
     }
 
     @PutMapping("/{id}")
