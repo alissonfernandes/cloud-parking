@@ -2,12 +2,9 @@ package br.com.alissonfernandes.cloudparking.mapper.impl;
 
 import br.com.alissonfernandes.cloudparking.dto.VacancyDTO;
 import br.com.alissonfernandes.cloudparking.mapper.VacancyMapper;
-import br.com.alissonfernandes.cloudparking.mapper.VehicleMapper;
 import br.com.alissonfernandes.cloudparking.model.Vacancy;
 
 public class VacancyMapperImpl implements VacancyMapper {
-
-    private VehicleMapper vehicleMapper = new VehicleMapperImpl();
 
     @Override
     public Vacancy toModel(VacancyDTO vacancyDTO) {
@@ -18,7 +15,6 @@ public class VacancyMapperImpl implements VacancyMapper {
         vacancy.setNumber(vacancyDTO.getNumber());
         vacancy.setStatus(vacancyDTO.getStatus());
         vacancy.setVehicleType(vacancyDTO.getVehicleType());
-        vacancy.setVehicle(vehicleMapper.toModel(vacancyDTO.getVehicle()));
         return vacancy;
     }
 
@@ -31,7 +27,6 @@ public class VacancyMapperImpl implements VacancyMapper {
         vacancyDTO.setNumber(vacancy.getNumber());
         vacancyDTO.setStatus(vacancy.getStatus());
         vacancyDTO.setVehicleType(vacancy.getVehicleType());
-        vacancyDTO.setVehicle(vehicleMapper.toDTO(vacancy.getVehicle()));
         return vacancyDTO;
     }
 }
