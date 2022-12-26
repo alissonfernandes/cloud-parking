@@ -38,6 +38,6 @@ public class VehicleDTOBuilder {
     private VacancyDTO vacancyDTO = VacancyDTOBuilder.builder().build().toVacancyDTO();
 
     public VehicleDTO toVehicleDTO() {
-        return new VehicleDTO(id, vehicleType, placa, color, entryDate, exitDate, bill, driveName,vacancyDTO);
+        return new VehicleDTO(id, vehicleType, placa, color, driveName);
     }
 }

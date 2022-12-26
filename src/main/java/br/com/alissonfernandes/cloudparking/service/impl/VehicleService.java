@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +21,11 @@ public class VehicleService {
     private VehicleMapper vehicleMapper;
 
     public VehicleDTO entry(VehicleDTO vehicleDTO) {
-        vehicleDTO.setEntryDate(LocalDateTime.now());
         return this.vehicleSave(vehicleDTO);
     }
 
     public VehicleDTO exit(Long id) throws VehicleNotFoundException {
         VehicleDTO vehicleDTO = this.verifyIfExists(id);
-        vehicleDTO.setExitDate(LocalDateTime.now());
         return this.vehicleSave(vehicleDTO);
     }
 
@@ -49,7 +46,6 @@ public class VehicleService {
 
     public VehicleDTO delete(Long id) throws VehicleNotFoundException {
         VehicleDTO vehicle = this.verifyIfExists(id);
-        vehicle.setExitDate(LocalDateTime.now());
         return this.vehicleSave(vehicle);
     }
 

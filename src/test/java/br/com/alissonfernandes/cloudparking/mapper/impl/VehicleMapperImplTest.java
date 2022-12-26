@@ -23,10 +23,7 @@ public class VehicleMapperImplTest {
         assertEquals(vehicleDTO.getVehicleType(), vehicleModel.getVehicleType());
         assertEquals(vehicleDTO.getPlaca(), vehicleModel.getPlaca());
         assertEquals(vehicleDTO.getColor(), vehicleModel.getColor());
-        assertEquals(vehicleDTO.getBill(), vehicleModel.getBill());
         assertEquals(vehicleDTO.getDriveName(), vehicleModel.getDriveName());
-        assertEquals(vehicleDTO.getEntryDate(), vehicleModel.getEntryDate());
-        assertEquals(vehicleDTO.getEntryDate(), vehicleModel.getExitDate());
     }
 
     @Test
@@ -41,9 +38,6 @@ public class VehicleMapperImplTest {
         assertEquals(vehicleModel.getPlaca(), vehicleDTO.getPlaca());
         assertEquals(vehicleModel.getColor(), vehicleDTO.getColor());
         assertEquals(vehicleModel.getVehicleType(), vehicleDTO.getVehicleType());
-        assertEquals(vehicleModel.getBill(), vehicleDTO.getBill());
         assertEquals(vehicleModel.getDriveName(), vehicleDTO.getDriveName());
-        assertEquals(vehicleModel.getEntryDate(), vehicleDTO.getEntryDate());
-        assertEquals(vehicleModel.getExitDate(), vehicleDTO.getExitDate());
     }
 }
