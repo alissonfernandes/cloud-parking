@@ -20,12 +20,7 @@ public class VehicleService {
 
     private VehicleMapper vehicleMapper;
 
-    public VehicleDTO entry(VehicleDTO vehicleDTO) {
-        return this.vehicleSave(vehicleDTO);
-    }
-
-    public VehicleDTO exit(Long id) throws VehicleNotFoundException {
-        VehicleDTO vehicleDTO = this.verifyIfExists(id);
+    public VehicleDTO save(VehicleDTO vehicleDTO) {
         return this.vehicleSave(vehicleDTO);
     }
 
