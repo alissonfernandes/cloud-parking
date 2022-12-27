@@ -24,6 +24,6 @@ public class VacancyDTOBuilder {
     private VehicleDTO vehicle;
 
     public VacancyDTO toVacancyDTO() {
-        return new VacancyDTO(id, number,status, vehicleType, vehicle);
+        return new VacancyDTO(id, number,status, vehicleType);
     }
 }

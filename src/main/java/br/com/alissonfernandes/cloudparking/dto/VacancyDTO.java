@@ -15,6 +15,5 @@ public class VacancyDTO {
     private Long number;
     private StatusVacancy status;
     private VehicleType vehicleType;
-    private VehicleDTO vehicle;
 
 }
