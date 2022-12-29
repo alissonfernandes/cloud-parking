@@ -30,7 +30,7 @@ public class VacancyController {
         return vacancyService.get(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyDTO> getListAll() {
         return vacancyService.listAll();

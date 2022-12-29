@@ -22,7 +22,7 @@ public class VehicleController {
         return vehicleService.get(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<VehicleDTO> getListAll() {
         return vehicleService.listAll();

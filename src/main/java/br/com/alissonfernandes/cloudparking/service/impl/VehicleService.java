@@ -39,9 +39,10 @@ public class VehicleService {
         return this.vehicleSave(vehicleDTO);
     }
 
-    public VehicleDTO delete(Long id) throws VehicleNotFoundException {
+    public void delete(Long id) throws VehicleNotFoundException {
         VehicleDTO vehicle = this.verifyIfExists(id);
-        return this.vehicleSave(vehicle);
+        Vehicle vehicleModel = vehicleMapper.toModel(vehicle);
+        vehicleRepository.delete(vehicleModel);
     }
 
     private VehicleDTO verifyIfExists(Long id) throws VehicleNotFoundException {
