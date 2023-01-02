@@ -27,9 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        String[] METHOD_GET_ROLE_USERS = {"/vacancy", "/all", "/motorcycle", "/car", "/unoccupied", "exit/", "vehicle/"};
-        String[] METHOD_PUT_ROLE_MANAGERS = {"/vacancy/", "/vehicle/"};
-        String[] METHOD_DELETE_ROLE_MANAGERS = {"/vacancy/", "/vehicle/"};
+        String[] METHOD_GET_ROLE_USERS = {"/api/v1/vacancy", "/all", "/motorcycle", "/car", "/unoccupied", "exit/", "vehicle/"};
+        String[] METHOD_PUT_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1//vehicle/"};
+        String[] METHOD_DELETE_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1/vehicle/"};
 
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, METHOD_GET_ROLE_USERS).hasRole("USERS")
