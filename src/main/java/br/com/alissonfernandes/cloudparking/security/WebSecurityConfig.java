@@ -30,11 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] METHOD_GET_ROLE_USERS = {"/api/v1/vacancy", "/all", "/motorcycle", "/car", "/unoccupied", "exit/", "vehicle/"};
         String[] METHOD_PUT_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1//vehicle/"};
         String[] METHOD_DELETE_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1/vehicle/"};
+        String[] METHOD_POST_ROLE_MANAGERS = {"/api/v1/vacancy", "/api/v1/parking/user"};
 
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, METHOD_GET_ROLE_USERS).hasRole("USERS")
                 .antMatchers(HttpMethod.POST, "/entry").hasRole("USERS")
-                .antMatchers(HttpMethod.POST, "/api/v1/vacancy").hasRole("MANAGERS")
+                .antMatchers(HttpMethod.POST, METHOD_POST_ROLE_MANAGERS).hasRole("MANAGERS")
                 .antMatchers(HttpMethod.PUT, METHOD_PUT_ROLE_MANAGERS).hasRole("MANAGERS")
                 .antMatchers(HttpMethod.DELETE, METHOD_DELETE_ROLE_MANAGERS).hasRole("MANAGERS")
                 .anyRequest().authenticated().and().httpBasic();
