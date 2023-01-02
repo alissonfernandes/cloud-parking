@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,10 +20,9 @@ import java.util.Set;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityDatabaseService  implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
-
     private UserMapper userMapper;
+    private PasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -43,6 +43,7 @@ public class SecurityDatabaseService  implements UserDetailsService {
 
     public UserDTO createUser(UserDTO userDTO) {
         User userModel = userMapper.toModel(userDTO);
+        userModel.setPassword(encoder.encode(userDTO.getPassword()));// criptografando antes de salvar no banco
         User userSaved =  userRepository.save(userModel);
         return userMapper.toDTO(userSaved);
     }
