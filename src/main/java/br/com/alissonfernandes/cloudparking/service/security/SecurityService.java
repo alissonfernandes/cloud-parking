@@ -74,4 +74,8 @@ public class SecurityService  implements UserDetailsService {
 
         } else throw new RuntimeException("Error login");
     }
+
+    public boolean exists(String username) {
+       return userRepository.findByUsername(username) == null ? false: true;
+    }
 }
