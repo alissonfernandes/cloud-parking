@@ -1,6 +1,6 @@
 package br.com.alissonfernandes.cloudparking.security;
 
-import br.com.alissonfernandes.cloudparking.service.security.SecurityDatabaseService;
+import br.com.alissonfernandes.cloudparking.service.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private SecurityDatabaseService securityService;
+    private SecurityService securityService;
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,12 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] METHOD_GET_ROLE_USERS = {"/api/v1/vacancy", "/all", "/motorcycle", "/car", "/unoccupied", "exit/", "vehicle/"};
         String[] METHOD_PUT_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1//vehicle/"};
         String[] METHOD_DELETE_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1/vehicle/"};
-        String[] METHOD_POST_ROLE_MANAGERS = {"/api/v1/vacancy", "/api/v1/parking/user"};
+        String[] METHOD_POST_ROLE_MANAGERS = {"/api/v1/vacancy"};
 
         http.headers().frameOptions().disable();
         http.cors().and().csrf().disable()
                 .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/v1/parking/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/parking/register").hasRole("MANAGERS")
                 .antMatchers(HttpMethod.GET, METHOD_GET_ROLE_USERS).hasRole("USERS")
                 .antMatchers(HttpMethod.POST, "/entry").hasRole("USERS")
                 .antMatchers(HttpMethod.POST, METHOD_POST_ROLE_MANAGERS).hasRole("MANAGERS")
