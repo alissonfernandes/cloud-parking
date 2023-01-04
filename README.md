@@ -1,6 +1,56 @@
 # cloud-parking
 Este projeto tem como objetivo desenvolver um conjunto de APIs utilizando o Spring Boot para gerenciar um parque de estacionamento de veículos.
 
+## Registrar usuário
+|Parâmetros |Descrição  |
+|---        |---        |
+|method     |POST       |
+|path       |`/api/v1/register`|
+|headers    | Yes|
+|role       |`MANAGERS`|   
+|body       |required   |
+
+#### headers
+|Key   |Value|
+|---   |---|
+Authorization| generated token|
+
+#### body
+```Json
+{
+    "name": "string",
+    "username": "string",
+    "password": "string",
+    "roles" : [
+        "USERS", "MANAGERS"
+    ]
+}
+
+```
+### response
+Status code: 200 OK
+#### body
+```Json
+{
+  "id": 0,
+  "name": "string",
+  "username": "string"
+  "password": "string",
+  "roles": [
+    "USERS", "MANAGERS"
+  ],
+}
+```
+|Status code| Descrição
+|--- |---|
+|200  |OK|
+|201|Created
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+
+
 ## Entrada de veículo
 ```
 /api/v1/parking/entry
