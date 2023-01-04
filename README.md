@@ -1,6 +1,19 @@
 # cloud-parking
 Este projeto tem como objetivo desenvolver um conjunto de APIs utilizando o Spring Boot para gerenciar um parque de estacionamento de veículos.
 
+## Endpoints
+|Endpoint                   |Method        |path                    |headers        |required       |Controle de acesso
+|---                        |---           |---                     |---            |---            |---
+|Registrar usuário          |POST          |`/api/v1/register`      |Sim            |body           |`MANAGERS`
+|Fazer Login                |POST          |`/api/v1/login`         |Não            |body           |Não há
+|Adicionar vaga             |POST          |`/api/v1/vacancy`       |Sim            |body           |`MANAGERS`
+|Selecionar vaga específica |GET           |`/api/v1/vacancy/{id}`  |Sim            |Id             |`USERS` e `MANAGERS`
+|Selecionar todas as vagas  |GET           |`/api/v1/vacancy/all`   |Sim            | -             |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desocupadas|GET |`/api/v1/vacancy/all/unoccupied`|Sim    | -             |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desocupadas de carro|GET|`/api/v1/vacancy/all/unoccupied/car`|Sim| -     |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desopucadas de motocicleta|GET|`/api/v1/vacancy/all/unoccupied/motorcycle`|Sim| -|`USERS` e `MANAGERS`
+|Atualizar vaga específica  |PUT           |`/api/v1/vacancy/{id}`  |Sim            |Id             |`MANAGERS`
+|Deletar vaga específica    |DELETE        |`/api/v1/vacancy/{id}`  |Sim            |Id             |`MANAGERS`
 ## Registrar usuário
 |Parâmetros |Descrição  |
 |---        |---        |
