@@ -26,6 +26,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(securityService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
+    private static String[] AUTH_WHITELIST_SWAGGER = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -34,12 +44,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] METHOD_DELETE_ROLE_MANAGERS = {"/api/v1/vacancy/", "/api/v1/vehicle/"};
         String[] METHOD_POST_ROLE_MANAGERS = {"/api/v1/vacancy"};
 
+
+
         http.headers().frameOptions().disable();
         http.cors().and().csrf().disable()
                 .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/parking/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/parking/register").hasRole("MANAGERS")
+                .antMatchers(this.AUTH_WHITELIST_SWAGGER).permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/register").hasRole("MANAGERS")
                 .antMatchers(HttpMethod.GET, METHOD_GET_ROLE_USERS).hasRole("USERS")
                 .antMatchers(HttpMethod.POST, "/entry").hasRole("USERS")
                 .antMatchers(HttpMethod.POST, METHOD_POST_ROLE_MANAGERS).hasRole("MANAGERS")

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping("/api/v1/parking/login")
+@RequestMapping("/api/v1/login")
 public class LoginController {
 
     private SecurityService securityService;
