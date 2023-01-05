@@ -61,6 +61,48 @@ Outras possíveis respostas dessa requisição:
 |403|Forbidden|
 |404| Not Found|
 
+## Registrar usuário
+Uma vez já logado no sistema, basta adicionar um novo usuário. Para isso, preencha o header da requisição informando uma _key_ chamada `Authorization`, passando como valor o `token` retornado no login, depois informe os dados do novo usuário que pretende adicionar no _body_ da requisição no path `/api/v1/register` utilizando o método `POST`.
+### Headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### Body
+```Json
+{
+    "name": "novoUsuario",
+    "username": "novoUsuario",
+    "password": "novoUsuario123",
+    "roles" : [
+        "USERS", "MANAGERS"
+    ]
+}
+```
+### Resposta
+Após isso, a aplicação restornará a seguinte resposta:
+
+Status Code: 200 OK
+```Json
+{
+    "id": 2,
+    "name": "novoUsuario",
+    "username": "novoUsuario",
+    "password": "$2a$10$fHZgBS89cJJFzHFMJ1ff1uCNWmgv9VIlSOriAKmJ2zJdIPdoc5Nva",
+    "roles": [
+        "USERS",
+        "MANAGERS"
+    ]
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200  |OK|
+|201|Created
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
 
 
 
