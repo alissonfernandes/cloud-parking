@@ -103,8 +103,140 @@ Outras possíveis respostas dessa requisição:
 |403|Forbidden|
 |404| Not Found|
 
+## Adicionar vaga
+Para adicionar uma vaga, informe o número da vaga, o status e tipo de veículo, se é carro ou motocicleta, no _body_ da requisição pelo path `/api/v1/vacancy` utilizando o método POST. Também é necessário informar o `token` de acesso no header.
+
+Lembrando que é necessário possuir possuir o perfil de acesso `MANAGERS` para executar essa requisição.
+### Headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### body
+```Json
+{
+    "number": 1,
+    "status": "UNOCCUPIED",
+    "vehicleType": "CAR"
+}
+```
+### Resposta
+Após isso, a aplicação restornará a seguinte resposta:
+
+Status Code: 201 OK
+```Json
+{
+    "id": 1,
+    "number": 14,
+    "status": "UNOCCUPIED",
+    "vehicleType": "CAR"
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200  |OK|
+|201|Created
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+## Selecionar vaga
+Para recuperar uma vaga, informe o `id` pelo seguinte path da requisição `/api/v1/vacancy/{id}` utilizando o método GET.
+
+Informe o `token` de acesso pelo header.
+### Headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### Resposta
+Após isso, a aplicação restornará a seguinte resposta:
+
+Status Code: 302 FOUND
+### body
+```Json
+{
+    "id": 1,
+    "number": 1,
+    "status": "UNOCCUPIED",
+    "vehicleType": "CAR"
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200  |OK|
+|302|Found
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
 
 
+## Selecionando todas as vagas
+Também é possivel recuperar todas as vagas, conforme a tabela abaixo.
+|Descrição                  |Método        |path                     |Controle de acesso
+|---                        |---           |---                       |---
+|Selecionar todas as vagas  |GET           |`/api/v1/vacancy/all`     |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desocupadas|GET |`/api/v1/vacancy/all/unoccupied`       |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desocupadas de carro|GET|`/api/v1/vacancy/all/unoccupied/car`    |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desopucadas de motocicleta|GET|`/api/v1/vacancy/all/unoccupied/motorcycle`|`USERS` e `MANAGERS`
+
+## Atualizar vaga
+Para atualizar uma vaga, envie o _body_ contendo os novos dados, informado o `id` da vaga do qual pretende atualizar através do path `/api/v1/vacancy/{id}` utilizando o método `PUT`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### body
+```json
+{
+    "id": 1,
+    "number": 1,
+    "status": "UNOCCUPIED",
+    "vehicleType": "MOTORCYCLE"
+}
+```
+
+### Resposta
+Após isso, a aplicação restornará a seguinte resposta:
+
+Status Code: 426 UPGRADE REQUIRED
+### body
+```Json
+{
+    "id": 1,
+    "number": 1,
+    "status": "UNOCCUPIED",
+    "vehicleType": "MOTORCYCLE"
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|426 |UPGRADE REQUIRED
+|200  |OK|
+|201|Created
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+## Deletar vaga
+Para remover uma vaga, basta informar o `id` da vaga do qual predente remover através do path `/api/v1/vacancy/{id}` utilizando o método `DELETE` e informar o token de acesso através do header.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### Resposta
+Após isso, a aplicação restornará a seguinte resposta:
+
+Status Code: 204 NO CONTENT
+
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|204 |No Content
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
 
 
 ## Endpoints
