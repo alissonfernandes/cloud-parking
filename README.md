@@ -13,7 +13,7 @@ Por conta disso, resolvi desenvolver esta API com o objetivo de aprimorar todo o
 |Selecionar todas as vagas   |GET       |`/api/v1/vacancy/all`
 |Selecionar todas as vagas desocupadas  |GET  |`/api/v1/vacancy/all/unoccupied`
 |Selecionar todas as vagas desocupadas de carro |GET|`/api/v1/vacancy/all/unoccupied/car`
-|Selecionar todas as vagas desopucadas de motocicleta |GET  |`/api/v1/vacancy/all/unoccupied/motorcycle`
+|Selecionar todas as vagas desocupadas de motocicleta |GET  |`/api/v1/vacancy/all/unoccupied/motorcycle`
 |Atualizar vaga específica  |PUT        |`/api/v1/vacancy/{id}`
 |Deletar vaga específica    |DELETE     |`/api/v1/vacancy/{id}`
 |Entrada de veículo         |POST       |`/api/v1/parking/entry`
@@ -35,7 +35,7 @@ Para acessar cada **endpoint** é necessário possuir o seguinte perfil de acess
 |Selecionar todas as vagas   |`USERS` e `MANAGERS`
 |Selecionar todas as vagas desocupadas  |`USERS` e `MANAGERS`
 |Selecionar todas as vagas desocupadas de carro |`USERS` e `MANAGERS`
-|Selecionar todas as vagas desopucadas de motocicleta   |`USERS` e `MANAGERS`
+|Selecionar todas as vagas desocupadas de motocicleta   |`USERS` e `MANAGERS`
 |Atualizar vaga específica  |`MANAGERS`
 |Deletar vaga específica    |`MANAGERS`
 |Entrada de veículo |`USERS` e `MANAGERS`|
