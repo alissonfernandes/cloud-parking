@@ -1,12 +1,32 @@
 # cloud-parking
-Este projeto tem como objetivo desenvolver um conjunto de APIs utilizando o Spring Boot para gerenciar um parque de estacionamento de veículos.
+Gerenciar um parque de estacionamento de veículos requer muita atenção e agilidade quando se trata de um grande fluxo de veículos. Devido a isso, torna-se uma tarefa inviável se executada manualmente.
 
+Por conta disso, resolvi desenvolver esta API com o objetivo de aprimorar todo o processo de gerenciamento através do monitoramento de entrada e saída de veículos de um estacionamento
+
+## Endpoints
+|Descrição                  |Método     |Path
+|---                        |---        |---
+|Fazer Login                |POST        |`/api/v1/login`
+|Registrar usuário          |POST        |`/api/v1/register`
+|Adicionar vaga             |POST       |`/api/v1/vacancy`
+|Selecionar vaga específica  |GET       |`/api/v1/vacancy/{id}`
+|Selecionar todas as vagas   |GET       |`/api/v1/vacancy/all`
+|Selecionar todas as vagas desocupadas  |GET  |`/api/v1/vacancy/all/unoccupied`
+|Selecionar todas as vagas desocupadas de carro |GET|`/api/v1/vacancy/all/unoccupied/car`
+|Selecionar todas as vagas desopucadas de motocicleta |GET  |`/api/v1/vacancy/all/unoccupied/motorcycle`
+|Atualizar vaga específica  |PUT        |`/api/v1/vacancy/{id}`
+|Deletar vaga específica    |DELETE     |`/api/v1/vacancy/{id}`
+|Entrada de veículo         |POST       |`/api/v1/parking/entry`
+|Saída de veículo           |GET        |`/api/v1/parking/exit/{id}`
+|Selecionar todos os veículos|GET       |`/api/v1/vehicle/all`
+|Selecionar veículo específico|GET      |`/api/v1/vehicle/{id}`
+|Atualizar veículo          |PUT        |`/api/v1/vehicle/{id}`
 
 ## Controle de acesso
 Esta API possui dois perfils de controle de acesso: `USERS` e `MANAGERS`.
 Para acessar cada **endpoint** é necessário possuir o seguinte perfil de acesso, com base na tabela abaixo.
 
-|Endpoint           |Controle de acesso
+|Endpoint           |Perfil de acesso
 |---                |---
 |Fazer Login        |Não há
 |Registrar usuário  | `MANAGERS`
@@ -17,7 +37,13 @@ Para acessar cada **endpoint** é necessário possuir o seguinte perfil de acess
 |Selecionar todas as vagas desocupadas de carro |`USERS` e `MANAGERS`
 |Selecionar todas as vagas desopucadas de motocicleta   |`USERS` e `MANAGERS`
 |Atualizar vaga específica  |`MANAGERS`
-|Deletar vaga específica    |`USERS` e `MANAGERS`
+|Deletar vaga específica    |`MANAGERS`
+|Entrada de veículo |`USERS` e `MANAGERS`|
+|Saída de veículo| `USERS` e `MANAGERS`
+|Selecionar todos os veículos| `USERS` e `MANAGERS`|
+|Selecionar veículo específico| `USERS` e `MANAGERS`|
+|Atualizar veículo|`MANAGERS`|
+
 
 ## Criação automática do usuário inicial
 
@@ -311,9 +337,9 @@ Status Code: 200 OK
     "vehicle": {
         "id": 1,
         "vehicleType": "CAR",
-        "placa": "523-123",
+        "placa": "000-000",
         "color": "Preto",
-        "driveName": "Teste"
+        "driveName": "Nome motorista"
     }
 }
 ```
@@ -324,5 +350,110 @@ Outras possíveis respostas dessa requisição:
 |401|Unauthorized|
 |403|Forbidden|
 |404| Not Found|
+
+## Selecionar todos os veículos
+Para recuperar todos os veículos, acesse o path `/api/v1/vehicle/all` utilizando o método `GET`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+
+Após isso, a aplicação retornará uma lista de todos os véiculos que passaram pelo estacionamento.
+### body
+Status Code: 200 OK
+```Json
+[
+    {
+        "id": 1,
+        "vehicleType": "CAR",
+        "placa": "000-000",
+        "color": "Preto",
+        "driveName": "Nome motorista"
+    },
+    {
+        "id": 2,
+        "vehicleType": "CAR",
+        "placa": "000-000",
+        "color": "Preto",
+        "driveName": "Nome motorista"
+    }
+]
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200| OK|
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+## Selecionar um vículo específico
+Para selecionar um veículo específico, informe o `id`do véiculo através do path `/api/v1/vehicle/{id}` utilizando o método `GET`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+
+Após isso, a aplicação retornará a seguinte resposta:
+### body
+Status Code: 200 OK
+```Json
+{
+   "id": 1,
+   "vehicleType": "CAR",
+   "placa": "000-000",
+   "color": "Preto",
+   "driveName": "Nome motorista"
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200| OK|
+|302|Found|
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+## Atualizar veículo
+Para atualizar dados do véiculo, envie o _body_ através do path `/api/v1/vehicle/{id}` passando um `id` referente ao veículo e utilize o método `PUT`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+
+### body
+```Json
+{
+   "id": 1,
+   "vehicleType": "CAR",
+   "placa": "000-000",
+   "color": "Branco",
+   "driveName": "Nome motorista"
+}
+```
+
+Após isso, a aplicação retornará a seguinte resposta:
+### body
+Status Code: 426 Upgrade Required
+
+```Json
+{
+   "id": 1,
+   "vehicleType": "CAR",
+   "placa": "000-000",
+   "color": "Branco",
+   "driveName": "Nome motorista"
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|201| Created|
+|302|Found|
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+|426| Upgrade Required
 
 
