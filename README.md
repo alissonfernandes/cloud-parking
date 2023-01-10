@@ -238,107 +238,91 @@ Outras possíveis respostas dessa requisição:
 |403|Forbidden|
 |404| Not Found|
 
-
-## Endpoints
-|Endpoint                   |Method        |path                    |headers        |required       |Controle de acesso
-|---                        |---           |---                     |---            |---            |---
-|Registrar usuário          |POST          |`/api/v1/register`      |Sim            |body           |`MANAGERS`
-|Fazer Login                |POST          |`/api/v1/login`         |Não            |body           |Não há
-|Adicionar vaga             |POST          |`/api/v1/vacancy`       |Sim            |body           |`MANAGERS`
-|Selecionar vaga específica |GET           |`/api/v1/vacancy/{id}`  |Sim            |Id             |`USERS` e `MANAGERS`
-|Selecionar todas as vagas  |GET           |`/api/v1/vacancy/all`   |Sim            | -             |`USERS` e `MANAGERS`
-|Selecionar todas as vagas desocupadas|GET |`/api/v1/vacancy/all/unoccupied`|Sim    | -             |`USERS` e `MANAGERS`
-|Selecionar todas as vagas desocupadas de carro|GET|`/api/v1/vacancy/all/unoccupied/car`|Sim| -     |`USERS` e `MANAGERS`
-|Selecionar todas as vagas desopucadas de motocicleta|GET|`/api/v1/vacancy/all/unoccupied/motorcycle`|Sim| -|`USERS` e `MANAGERS`
-|Atualizar vaga específica  |PUT           |`/api/v1/vacancy/{id}`  |Sim            |Id             |`MANAGERS`
-|Deletar vaga específica    |DELETE        |`/api/v1/vacancy/{id}`  |Sim            |Id             |`MANAGERS`
-## Registrar usuário
-|Parâmetros |Descrição  |
-|---        |---        |
-|method     |POST       |
-|path       |`/api/v1/register`|
-|headers    | Yes|
-|role       |`MANAGERS`|   
-|body       |required   |
-
-#### headers
-|Key   |Value|
-|---   |---|
-Authorization| generated token|
-
-#### body
+## Entrada de veículo ao estacionamento
+Ao entrar um veículo ao estacionamento, informe: o tipo de veículo, placa, cor e nome do motorista pelo _body_ da requisição através do path `/api/v1/parking/entry` utilizando o método `POST`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+### body
 ```Json
 {
-    "name": "string",
-    "username": "string",
-    "password": "string",
-    "roles" : [
-        "USERS", "MANAGERS"
-    ]
+   "vehicleType": "CAR",
+   "placa": "000-000",
+   "color": "Preto",
+   "driveName": "Nome motorista"
 }
-
 ```
-### response
-Status code: 200 OK
-#### body
+Após isso, a aplicação retornará a seguinte resposta:
+### body
+Status Code: 200 OK
 ```Json
 {
-  "id": 0,
-  "name": "string",
-  "username": "string"
-  "password": "string",
-  "roles": [
-    "USERS", "MANAGERS"
-  ],
+    "id": 1,
+    "entryDate": "2023-01-09T21:08:05.8904734",
+    "exitDate": null,
+    "bill": null,
+    "vacancy": {
+        "id": 1,
+        "number": 1,
+        "status": "OCCUPIED",
+        "vehicleType": "CAR"
+    },
+    "vehicle": {
+        "id": 1,
+        "vehicleType": "CAR",
+        "placa": "000-000",
+        "color": "Preto",
+        "driveName": "Nome motorista"
+    }
 }
 ```
+Outras possíveis respostas dessa requisição:
 |Status code| Descrição
 |--- |---|
-|200  |OK|
-|201|Created
+|200| OK|
+|201 |Created
+|401|Unauthorized|
+|403|Forbidden|
+|404| Not Found|
+
+## Saída de veículo do estacionamento
+Ao sair um veículo do estacionamento, informe o `id` da entrada através do path `/api/v1/parking/exit/{id}` utilizando o método `GET`.
+### headers
+|KEY    |VALUE
+|---    |---
+|Authorization  |`token`
+
+Após isso, a aplicação retornará a seguinte resposta:
+### body
+Status Code: 200 OK
+```Json
+{
+    "id": 1,
+    "entryDate": "2023-01-09T21:08:05.890473",
+    "exitDate": "2023-01-09T21:19:32.305532",
+    "bill": 4.675,
+    "vacancy": {
+        "id": 1,
+        "number": 1,
+        "status": "UNOCCUPIED",
+        "vehicleType": "CAR"
+    },
+    "vehicle": {
+        "id": 1,
+        "vehicleType": "CAR",
+        "placa": "523-123",
+        "color": "Preto",
+        "driveName": "Teste"
+    }
+}
+```
+Outras possíveis respostas dessa requisição:
+|Status code| Descrição
+|--- |---|
+|200| OK|
 |401|Unauthorized|
 |403|Forbidden|
 |404| Not Found|
 
 
-
-## Entrada de veículo
-```
-/api/v1/parking/entry
-```
-Será necessário passar o seguinte corpo da solicitação
-```
-{
-   "vehicleType": "CAR",
-   "placa": "000-000",
-   "color": "Branco",
-   "driveName": "Nome motorista"
-}
-```
-
-## Saída de veículo
-```
-/api/v1/parking/exit/{id}
-```
-Fará retornar o seguinte recurso
-```
-{
-    "id": 22,
-    "entryDate": "2022-12-28T20:59:37.487551",
-    "exitDate": "2022-12-28T22:25:46.7611491",
-    "bill": 36.55,
-    "vacancy": {
-        "id": 2,
-        "number": 2,
-        "status": "UNOCCUPIED",
-        "vehicleType": "CAR"
-    },
-    "vehicle": {
-        "id": 21,
-        "vehicleType": "CAR",
-        "placa": "523-123",
-        "color": "Preto",
-        "driveName": "João Pedro"
-    }
-}
-```
